@@ -10,7 +10,7 @@ class UserController extends Controller {
    * Display a listing of the resource.
    */
   public function index() {
-    $users = User::paginate(10);
+    $users = User::paginate(5);
     return view('users.index', compact('users'));
   }
 

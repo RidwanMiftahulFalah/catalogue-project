@@ -87,7 +87,9 @@
           {{-- End of User List Table --}}
 
 
-          {{ $users->links() }}
+          <div class="my-4">
+            {{ $users->links() }}
+          </div>
 
         </div>
       </div>

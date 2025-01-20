@@ -21,7 +21,7 @@
             </div>
           @endif
 
-          <form action="{{ route('products.store') }}" method="post">
+          <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
@@ -43,6 +43,12 @@
               <input type="text" name="description" id="description"
                 class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                 value="{{ old('description') }}">
+            </div>
+
+            <div class="mb-3">
+              <label for="images" class="block font-medium text-sm text-gray-700">Images</label>
+              <input type="file" multiple name="images[]" id="images"
+                class="form-control border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
             </div>
 
             <button type="submit"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use App\Models\ProductImage;
 
 class ProductController extends Controller {
   /**
@@ -31,11 +32,19 @@ class ProductController extends Controller {
       'description' => 'required',
     ]);
 
-    Product::create([
-      'name' => $request->name,
-      'price' => $request->price,
-      'description' => $request->description,
-    ]);
+    $product = new Product;
+    $product->name = $request->name;
+    $product->price = $request->price;
+    $product->description = $request->description;
+    $product->save();
+
+    foreach ($request->file('images') as $image_file) {
+      $image = new ProductImage;
+      $path = $image_file->store('/images', ['disk' => 'my_files']);
+      $image->image_url = $path;
+      $image->product_id = $product->id;
+      $image->save();
+    }
 
     return redirect()->route('products.index')->with('message', 'New product successfully added!');
   }

@@ -9,11 +9,10 @@ return new class extends Migration {
    * Run the migrations.
    */
   public function up(): void {
-    Schema::create('products', function (Blueprint $table) {
-      $table->uuid('id')->primary();
-      $table->string('name', 100);
-      $table->integer('price', false);
-      $table->text('description');
+    Schema::create('product_images', function (Blueprint $table) {
+      $table->uuid('id');
+      $table->foreignUuid('product_id');
+      $table->string('image_url');
       $table->timestamps();
     });
   }
@@ -22,6 +21,6 @@ return new class extends Migration {
    * Reverse the migrations.
    */
   public function down(): void {
-    Schema::dropIfExists('products');
+    Schema::dropIfExists('product_images');
   }
 };

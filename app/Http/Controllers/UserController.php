@@ -10,7 +10,7 @@ class UserController extends Controller {
    * Display a listing of the resource.
    */
   public function index() {
-    $users = User::paginate(5);
+    $users = User::paginate(10);
     return view('users.index', compact('users'));
   }
 
@@ -18,14 +18,28 @@ class UserController extends Controller {
    * Show the form for creating a new resource.
    */
   public function create() {
-    //
+    return view('users.create');
   }
 
   /**
    * Store a newly created resource in storage.
    */
   public function store(Request $request) {
-    //
+    $request->validate([
+      'name' => ['required', 'max:200'],
+      'email' => ['required', 'max:200'],
+      'password' => ['required', 'min:8'],
+      // 'role' => 'required',
+    ]);
+
+    User::create([
+      'name' => $request->name,
+      'email' => $request->email,
+      'password' => $request->password,
+      'role' => $request->role,
+    ]);
+
+    return redirect()->route('users.index')->with('message', 'New user successfully registered!');
   }
 
   /**
@@ -46,7 +60,6 @@ class UserController extends Controller {
    * Update the specified resource in storage.
    */
   public function update(Request $request, User $user) {
-    //
   }
 
   /**

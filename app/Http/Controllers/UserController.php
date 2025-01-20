@@ -60,6 +60,10 @@ class UserController extends Controller {
    * Update the specified resource in storage.
    */
   public function update(Request $request, User $user) {
+    $user->update($user->is_active ? ['is_active' => false] : ['is_active' => true]);
+    $message = 'Selected user\'s account successfully ' . ($user->is_active ? 'activated!' : 'deactivated!');
+
+    return redirect()->route('users.index')->with('message', $message);
   }
 
   /**
